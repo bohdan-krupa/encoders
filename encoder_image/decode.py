@@ -1,4 +1,8 @@
 import cv2
+import random
+
+seed = input('Key: ')
+random.seed(seed)
 
 image = cv2.imread('encoded.bmp')
 rows, cols, other = image.shape
@@ -7,10 +11,12 @@ bin_parts_array = []
 
 for row in range(rows):
   for col in range(cols):
+    rand = random.randint(0, 2)
     b, g, r = image[row, col]
-    r_bin_rest = format(r, '08b')[-3:]
-    g_bin_rest = format(g, '08b')[-2:]
-    b_bin_rest = format(b, '08b')[-3:]
+
+    r_bin_rest = format(r, '08b')[-2:] if rand == 0 else format(r, '08b')[-3:]
+    g_bin_rest = format(g, '08b')[-2:] if rand == 1 else format(g, '08b')[-3:]
+    b_bin_rest = format(b, '08b')[-2:] if rand == 2 else format(b, '08b')[-3:]
 
     bin_parts_array.append(r_bin_rest + g_bin_rest + b_bin_rest)
 
